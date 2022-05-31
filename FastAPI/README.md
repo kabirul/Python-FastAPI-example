@@ -20,19 +20,6 @@ This repository contains code for asynchronous example api using the [Fast Api f
 7. Check the app on [notes](http://localhost:8002/notes)
 8. Api documentation generated on [docs](http://localhost:8002/docs)
 
-## Installation method 2 (Run Locally using Docker)
-1.Ensure [Docker](https://docs.docker.com/install/) is installed
-2.Ensure [Docker Compose](https://docs.docker.com/compose/install/) is installed
-3.Clone this Repo
-`git clone (https://github.com/kabirul/FastAPI-example)`
-
-4.`cd FastAPI-example`
-5.Use Docker-Compose to spin up containers `docker-compose up -d --build`
-
-6.If everything completes should be available on [notes](http://localhost:8002/notes)
-
-7.Docs are generated on [docs](http://localhost:8002/docs)
-
 ## Tests
 
 Tests are available using pytest
