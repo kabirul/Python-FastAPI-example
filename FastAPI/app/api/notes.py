@@ -1,14 +1,15 @@
-from app.api.crud import post,get,get_all,put,delete
+from app.api import crud
 from app.api.models import NoteDB, NoteSchema
 from fastapi import APIRouter, HTTPException, Path, FastAPI
 from typing import Any, List 
 
 router = APIRouter()
 
+#note_post,note_get,note_get_all,note_put,note_delete
 
 @router.post("/", response_model=NoteDB, status_code=201)
 async def create_note(payload: NoteSchema):
-    note_id = await post(payload)
+    note_id = await crud.post(payload)
 
     response_object = {
         "id": note_id,
@@ -19,21 +20,21 @@ async def create_note(payload: NoteSchema):
     
 @router.get("/{id}/", response_model=NoteDB)
 async def read_note(id: int = Path(..., gt=0),):
-    note = await get(id)
+    note = await crud.get(id)
     if not note:
         raise HTTPException(status_code=404, detail="Note not found")
     return note
 
 @router.get("/", response_model=List[NoteDB])
 async def read_all_notes():
-    return await get_all()
+    return await crud.get_all()	
 
 @router.put("/{id}/", response_model=NoteDB)
 async def update_note(payload:NoteSchema,id:int=Path(...,gt=0)): #Ensures the input is greater than 0
-    note = await get(id)
+    note = await crud.get(id)
     if not note:
         raise HTTPException(status_code=404, detail="Note not found")
-    note_id = await put(id, payload)
+    note_id = await crud.put(id, payload)
     response_object = {
         "id": note_id,
         "title": payload.title,
@@ -44,9 +45,9 @@ async def update_note(payload:NoteSchema,id:int=Path(...,gt=0)): #Ensures the in
 #DELETE route
 @router.delete("/{id}/", response_model=NoteDB)
 async def delete_note(id:int = Path(...,gt=0)):
-    note = await get(id)
+    note = await crud.get(id)
     if not note:
         raise HTTPException(status_code=404, detail="Note not found")
-    await delete(id)
+    await crud.delete(id)
 
     return note
